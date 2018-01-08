@@ -34,8 +34,9 @@ export class HomeComponent implements OnInit {
 
 itemCount: number = 4;
 btnText: string = 'Add an item';
-goalText: string = 'My first life goal';
+goalText: string = '';
 goals = [];
+showSpinner: boolean = false;
 
   constructor(private _data: DataService) { }
 
@@ -46,10 +47,15 @@ goals = [];
   }
 
   addItem() {
-    this.goals.push(this.goalText);
-    this.goalText = '';
-    this.itemCount = this.goals.length;
-    this._data.changeGoal(this.goals);
+    this.showSpinner = true;
+    
+    setTimeout(() => {
+      this.goals.push(this.goalText);
+      this.goalText = '';
+      this.itemCount = this.goals.length;
+      this._data.changeGoal(this.goals);
+      this.showSpinner = false;
+    }, 2000)
   }
 
   removeItem(i) {
